@@ -18,7 +18,7 @@
   <style>
     /* ── Design Tokens ── */
     :root{
-      --clr-brand:#EA580C;--clr-brand-dark:#C2410C;--clr-brand-light:#FFF7ED;
+      --clr-brand:#C84B11;--clr-brand-dark:#A83A0E;--clr-brand-light:#FFF7ED;
       --clr-brand-border:#FED7AA;
       --clr-surface:#FFFFFF;--clr-bg:#F1F5F9;
       --clr-header:#0F172A;--clr-header-2:#1E293B;
@@ -92,7 +92,7 @@
       .photo-strip img{width:50px!important;height:50px!important}
       .print-header{display:block!important;padding:16px 0 8px;border-bottom:2px solid var(--clr-brand);margin-bottom:12px}
       /* Timeline bars: force color printing */
-      .tl-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#EA580C!important}
+      .tl-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#C84B11!important}
       .tl-bar-wrap{background:#F1F5F9!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
       /* Material takeoffs */
       .mat-row{break-inside:avoid}
@@ -506,6 +506,9 @@
     .nav-btn-ghost{background:rgba(255,255,255,.08);color:#94A3B8}
     .nav-btn-ghost:hover{background:rgba(255,255,255,.14);color:#E2E8F0}
     .nav-btn-ghost:active{background:rgba(255,255,255,.2)}
+    .nav-btn-done{background:rgba(34,197,94,.12);color:#16a34a;border:1.5px solid rgba(34,197,94,.25)}
+    .nav-btn-done:hover{background:rgba(34,197,94,.2)}
+    .nav-btn-done:active{background:rgba(34,197,94,.28)}
     .nav-btn-primary{background:var(--clr-brand);color:#fff;
       box-shadow:0 2px 8px rgba(234,88,12,.35)}
     .nav-btn-primary:hover{background:var(--clr-brand-dark)}
@@ -685,7 +688,7 @@
       padding:12px 14px;border-radius:12px;cursor:pointer;
       transition:background var(--dur-fast) var(--ease)}
     .proj-item:hover{background:rgba(255,255,255,.07)}
-    .proj-item.active{background:#EA580C}
+    .proj-item.active{background:#C84B11}
     .proj-item:active{background:rgba(255,255,255,.12)}
   </style>
 </head>
@@ -777,6 +780,10 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
         Export Excel Only
       </button>
+      <button id="export-json-btn" class="w-full py-3 bg-gray-700 text-gray-300 rounded-xl font-bold text-sm flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-600 transition-colors">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        Backup Project (JSON)
+      </button>
     </div>
     <div class="border-t border-gray-700 pt-4 flex items-center justify-between">
       <span class="text-gray-400 text-xs font-semibold">LIGHT MODE</span>
@@ -804,7 +811,7 @@
   <div class="flex items-center gap-2 flex-1 min-w-0">
     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="28" height="28" rx="6" fill="#111827"/>
-      <polygon points="14,3 25,14 14,25 3,14" fill="#EA580C"/>
+      <polygon points="14,3 25,14 14,25 3,14" fill="#C84B11"/>
       <text x="14" y="19" text-anchor="middle" font-family="system-ui,sans-serif"
         font-size="11" font-weight="900" fill="white">S</text>
     </svg>
@@ -823,6 +830,11 @@
   </button>
   <button id="gear-btn" class="text-gray-400 flex items-center justify-center w-11 h-11 rounded-xl hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer" aria-label="Open settings">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+  </button>
+  <button id="close-proj-btn" aria-label="Back to projects"
+    class="text-gray-400 flex items-center justify-center w-11 h-11 rounded-xl hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer"
+    style="flex-shrink:0">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
 </header>
 
@@ -855,6 +867,14 @@
 
 <!-- ══════ BOTTOM NAV ══════ -->
 <nav class="bottom-nav">
+  <button id="home-btn" aria-label="Back to projects"
+    style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;
+      border-radius:10px;border:none;background:transparent;cursor:pointer;
+      color:#9CA3AF;flex-shrink:0;transition:background .15s"
+    onmouseenter="this.style.background='rgba(255,255,255,.08)'"
+    onmouseleave="this.style.background='transparent'">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  </button>
   <button id="prev-btn" class="nav-btn nav-btn-ghost flex items-center gap-1.5 cursor-pointer" aria-label="Previous section">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
     <span id="prev-label">Prev</span>
@@ -1297,6 +1317,7 @@ let S = {
   addCtx: null,        // {secKey, roomId}
   priceCtx: null,      // {itemId}
   fsCtx: null,         // {stateId, idx}
+  sumTab: 'overview',  // summary sub-tab: overview | finance | bids | reports
 };
 
 function mkProj() {
@@ -1482,15 +1503,18 @@ function persist() {
 function load() {
   try {
     const raw = localStorage.getItem('spark_v4_p');
-    if (raw) S.projects = JSON.parse(raw);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) S.projects = parsed;
+    }
     const c = localStorage.getItem('spark_v4_c');
     if (c && S.projects.find(p=>p.id===c)) S.curId = c;
-  } catch(e) {}
-  if (!S.projects.length) {
-    const p=mkProj(); p.name='Sample Property'; p.address='123 Main St';
-    S.projects.push(p); S.curId=p.id; persist();
+  } catch(e) {
+    console.warn('Spark: localStorage corrupted, resetting.', e);
+    S.projects = []; S.curId = null;
+    try { localStorage.removeItem('spark_v4_p'); localStorage.removeItem('spark_v4_c'); } catch(_) {}
   }
-  if (!S.curId) S.curId = S.projects[0].id;
+  if (!S.curId && S.projects.length) S.curId = S.projects[0].id;
 }
 
 // ═══════════════════ TAB BAR ═══════════════════
@@ -1536,7 +1560,40 @@ function renderTabBar(p) {
 
 // ═══════════════════ RENDER ═══════════════════
 function render() {
-  const p = proj(); if (!p) return;
+  const p = proj();
+  if (!p) {
+    document.getElementById('h-total').textContent = '$0';
+    document.getElementById('h-name').textContent = 'No Property';
+    document.getElementById('h-addr').textContent = 'Repair Estimator';
+    document.getElementById('h-prog-txt').textContent = '—';
+    document.getElementById('h-prog-fill').style.width = '0%';
+    document.getElementById('h-prog-pct').textContent = '0% complete';
+    document.getElementById('nav-total').textContent = '$0';
+    document.getElementById('section-content').innerHTML = `
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;
+        padding:60px 32px;text-align:center;min-height:50vh">
+        <div style="width:72px;height:72px;border-radius:20px;background:#FFF3EE;
+          display:flex;align-items:center;justify-content:center;margin-bottom:20px">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C84B11" stroke-width="1.8" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div style="font-size:18px;font-weight:900;color:#111827;margin-bottom:8px">No Property Selected</div>
+        <div style="font-size:14px;color:#6B7280;margin-bottom:28px;max-width:260px;line-height:1.5">
+          Create a property to start estimating repair costs.
+        </div>
+        <button onclick="openDrawer('proj')"
+          style="padding:14px 28px;background:#C84B11;color:#fff;border:none;border-radius:14px;
+            font-weight:800;font-size:15px;cursor:pointer;font-family:inherit;
+            box-shadow:0 4px 14px rgba(200,75,17,.35)">
+          + New Property
+        </button>
+      </div>`;
+    document.getElementById('prev-btn').style.display = 'none';
+    document.getElementById('next-btn').style.display = 'none';
+    document.getElementById('home-btn').style.color = '#C84B11';
+    return;
+  }
+  document.getElementById('next-btn').style.display = '';
+  document.getElementById('home-btn').style.color = '#9CA3AF';
   const total = calcTotal(p);
   const {done,total:pt} = calcProgress(p);
   const pct = pt ? Math.round(done/pt*100) : 0;
@@ -1560,10 +1617,11 @@ function render() {
   const prevLbl = document.getElementById('prev-label');
   const nextLbl = document.getElementById('next-label');
   if(prevLbl) prevLbl.textContent = prevSec ? label(prevSec) : '';
-  prevBtn.style.visibility = prevSec ? 'visible' : 'hidden';
+  prevBtn.style.display = prevSec ? 'flex' : 'none';
   if(nextLbl) nextLbl.textContent = nextSec ? label(nextSec) : 'Done';
   nextBtn.classList.toggle('nav-btn-primary', !!nextSec);
   nextBtn.classList.toggle('nav-btn-ghost', !nextSec);
+  nextBtn.classList.toggle('nav-btn-done', !nextSec);
 
   renderSection();
 }
@@ -1774,8 +1832,8 @@ function renderItem(itemId, stateId, gsid, p, nanDim=false) {
         </label>
       </div>
       ${photos.length ? `<button class="ai-analyze-btn" data-action="ai-analyze" data-sid="${stateId}">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><circle cx="11" cy="11" r="3"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        AI Damage Analysis
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M8 14s1.5-2 3-2 3 2 3 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="13" y1="9" x2="13.01" y2="9"/></svg>
+        Analyze Photos
       </button>` : ''}
       <div class="ai-result-panel" id="ai-panel-${stateId}" style="display:none"></div>
       ${itemDef?.serial ? `
@@ -1821,7 +1879,64 @@ function addItemBtn(secKey, roomId) {
 // ═══════════════════ SUMMARY TAB ═══════════════════
 function renderSummary(p) {
   const total = calcTotal(p);
-  // Overall completion %
+  const tab = S.sumTab || 'overview';
+  const risk = calcRiskScore(p);
+
+  const printHdr = `<div class="print-header">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div style="font-size:18px;font-weight:900;color:#111">${p.name||'Project'}</div>
+        <div style="font-size:12px;color:#6B7280;margin-top:2px">${p.address||''}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:11px;color:#6B7280">Spark Repair Estimator</div>
+        <div style="font-size:11px;color:#6B7280">${new Date().toLocaleDateString()}</div>
+        <div style="font-size:20px;font-weight:900;color:#C84B11;margin-top:2px">${fmt(total)}</div>
+      </div>
+    </div>
+  </div>`;
+
+  const totalTile = `<div class="bg-white rounded-2xl p-4 shadow-sm mb-3 text-center">
+    <div class="text-gray-500 text-xs font-bold tracking-widest mb-1">TOTAL REPAIR ESTIMATE</div>
+    <div class="sum-total-val text-4xl font-black text-gray-900 tabular-nums">${fmt(total)}</div>
+    <div class="flex items-center justify-center gap-3 mt-2">
+      ${statusPill(p.status)}
+      <span class="risk-badge risk-${risk.score}" title="${risk.detail}">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Risk ${risk.score}/5 · ${risk.label}
+      </span>
+    </div>
+  </div>`;
+
+  const TABS = [
+    {id:'overview', svg:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>`, label:'Overview'},
+    {id:'finance',  svg:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`, label:'Finance'},
+    {id:'bids',     svg:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`, label:'Bids'},
+    {id:'reports',  svg:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`, label:'Reports'},
+  ];
+  const subtabNav = `<div style="display:flex;gap:6px;padding:10px 16px;overflow-x:auto;
+    scrollbar-width:none;background:#F9F6F2;border-bottom:1px solid #EFE8E0;position:sticky;top:0;z-index:2">
+    ${TABS.map(t=>`<button onclick="switchSumTab('${t.id}')"
+      style="display:flex;align-items:center;gap:5px;padding:7px 13px;border-radius:20px;
+        border:none;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;
+        background:${tab===t.id?'#C84B11':'#fff'};
+        color:${tab===t.id?'#fff':'#6B7280'};
+        box-shadow:${tab===t.id?'0 2px 8px rgba(200,75,17,.3)':'0 1px 3px rgba(0,0,0,.08)'};
+        transition:all .15s">
+      ${t.svg}${t.label}
+    </button>`).join('')}
+  </div>`;
+
+  let content = '';
+  if (tab === 'overview') content = _sumOverview(p, total);
+  else if (tab === 'finance') content = _sumFinance(p, total);
+  else if (tab === 'bids') content = _sumBids(p, total);
+  else if (tab === 'reports') content = _sumReports(p);
+
+  return `<div>${printHdr}${subtabNav}<div class="p-4">${totalTile}${content}</div></div>`;
+}
+
+function _sumOverview(p, total) {
   let totalGroups=0, doneGroups=0;
   for (const sk of ['general','kitchen','bathroom','bedroom','living','systems','exterior']) {
     const sec=SECTIONS[sk]; const rooms=sec.type==='room'?(p.rooms[sec.roomKey]||[]):[null];
@@ -1831,68 +1946,57 @@ function renderSummary(p) {
     }
   }
   const pctDone = totalGroups ? Math.round(doneGroups/totalGroups*100) : 0;
-
   const contingency = p.contingency ?? 10;
   const contingencyAmt = total * contingency / 100;
   const totalWithBuffer = total + contingencyAmt;
-  const risk = calcRiskScore(p);
 
-  let h = `<div class="p-4">
-    <div class="print-header">
-      <div style="display:flex;align-items:center;justify-content:space-between">
-        <div>
-          <div style="font-size:18px;font-weight:900;color:#111">${p.name||'Project'}</div>
-          <div style="font-size:12px;color:#6B7280;margin-top:2px">${p.address||''}</div>
-        </div>
-        <div style="text-align:right">
-          <div style="font-size:11px;color:#6B7280">Spark Repair Estimator</div>
-          <div style="font-size:11px;color:#6B7280">${new Date().toLocaleDateString()}</div>
-          <div style="font-size:20px;font-weight:900;color:#EA580C;margin-top:2px">${fmt(total)}</div>
-        </div>
-      </div>
-    </div>
-    <div class="bg-white rounded-2xl p-5 shadow-sm mb-1 text-center">
-      <div class="text-gray-500 text-xs font-bold tracking-widest mb-2">TOTAL REPAIR ESTIMATE</div>
-      <div class="sum-total-val text-5xl font-black text-gray-900 tabular-nums">${fmt(total)}</div>
-      <div class="text-gray-400 text-xs mt-2">${p.address||'No address'}</div>
-      <div class="flex items-center justify-center gap-3 mt-3">
-        ${statusPill(p.status)}
-        <span class="risk-badge risk-${risk.score}" title="${risk.detail}">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Risk ${risk.score}/5 · ${risk.label}
-        </span>
-      </div>
-    </div>
-    <div class="bg-white rounded-2xl px-5 py-4 shadow-sm mb-1">
-      <div class="flex justify-between items-center mb-2">
-        <span class="text-xs font-semibold text-gray-500">CONTINGENCY BUFFER</span>
-        <span class="text-orange-600 font-black text-base tabular-nums" id="contingency-display">${contingency}% = ${fmt(contingencyAmt)}</span>
-      </div>
-      <input type="range" class="contingency-slider" min="0" max="30" step="1"
-        value="${contingency}" id="contingency-slider" aria-label="Contingency percentage">
-      <div class="flex justify-between mt-2">
-        <span class="text-xs text-gray-400">0%</span>
-        <span class="text-xs font-bold text-gray-700">Total with buffer: <span id="contingency-total" class="text-orange-600">${fmt(totalWithBuffer)}</span></span>
-        <span class="text-xs text-gray-400">30%</span>
-      </div>
-    </div>
-    <div class="bg-white rounded-2xl px-5 py-3 shadow-sm mb-4">
-      <div class="flex justify-between items-center mb-1">
-        <span class="text-xs font-semibold text-gray-500">GROUPS ASSESSED</span>
-        <span class="text-xs font-bold text-orange-600">${doneGroups}/${totalGroups}</span>
-      </div>
-      <div class="sec-prog-wrap" style="margin:0 0 0 0">
-        <div class="sec-prog-fill" style="width:${pctDone}%"></div>
-      </div>
-    </div>`;
+  const totalItems = buildRows(p).length;
+  const sectionsWithCost = ['general','kitchen','bathroom','bedroom','living','systems','exterior'].filter(sk=>sectionTotal(sk,p)>0).length;
+  const costPerSqft = p.sqft > 0 ? (total/p.sqft).toFixed(2) : null;
 
-  // Section breakdown
+  let h = `<div class="bg-white rounded-2xl px-5 py-4 shadow-sm mb-3">
+    <div class="flex justify-between items-center mb-2">
+      <span class="text-xs font-semibold text-gray-500">CONTINGENCY BUFFER</span>
+      <span style="color:#C84B11" class="font-black text-base tabular-nums" id="contingency-display">${contingency}% = ${fmt(contingencyAmt)}</span>
+    </div>
+    <input type="range" class="contingency-slider" min="0" max="30" step="1"
+      value="${contingency}" id="contingency-slider" aria-label="Contingency percentage">
+    <div class="flex justify-between mt-2">
+      <span class="text-xs text-gray-400">0%</span>
+      <span class="text-xs font-bold text-gray-700">With buffer: <span id="contingency-total" style="color:#C84B11">${fmt(totalWithBuffer)}</span></span>
+      <span class="text-xs text-gray-400">30%</span>
+    </div>
+  </div>
+  <div class="bg-white rounded-2xl px-5 py-3 shadow-sm mb-3">
+    <div class="flex justify-between items-center mb-1">
+      <span class="text-xs font-semibold text-gray-500">GROUPS ASSESSED</span>
+      <span class="text-xs font-bold" style="color:#C84B11">${doneGroups}/${totalGroups}</span>
+    </div>
+    <div class="sec-prog-wrap" style="margin:0"><div class="sec-prog-fill" style="width:${pctDone}%"></div></div>
+  </div>
+  <div class="sum-section mb-4">
+    <div class="sum-sec-hd"><span class="sum-sec-label">Quick Stats</span></div>
+    <div class="grid grid-cols-3 gap-2 px-4 pb-4 pt-1">
+      <div class="bg-orange-50 border border-orange-100 rounded-xl p-3 text-center">
+        <div class="text-2xl font-black" style="color:#C84B11">${totalItems}</div>
+        <div class="text-xs font-semibold text-gray-400 mt-0.5">Line Items</div>
+      </div>
+      <div class="bg-blue-50 border border-blue-100 rounded-xl p-3 text-center">
+        <div class="text-2xl font-black text-blue-600">${sectionsWithCost}</div>
+        <div class="text-xs font-semibold text-gray-400 mt-0.5">Sections</div>
+      </div>
+      <div class="bg-green-50 border border-green-100 rounded-xl p-3 text-center">
+        <div class="text-2xl font-black text-green-600">${costPerSqft ? '$'+costPerSqft : '—'}</div>
+        <div class="text-xs font-semibold text-gray-400 mt-0.5">${costPerSqft ? 'Per Sq Ft' : 'No Sq Ft'}</div>
+      </div>
+    </div>
+  </div>`;
+
   const secKeys = ['general','kitchen','bathroom','bedroom','living','systems','exterior'];
   for (const sk of secKeys) {
     const sec = SECTIONS[sk];
     const secTot = sectionTotal(sk, p);
     const rooms = sec.type==='room' ? (p.rooms[sec.roomKey]||[]) : [null];
-    // Per-section progress
     let secTotal_g=0, secDone_g=0;
     for (const rid of rooms) for (const g of sec.groups) {
       secTotal_g++;
@@ -1915,9 +2019,7 @@ function renderSummary(p) {
           const sid=rid?rid+':'+id:id;
           return !isDel(sid,p)&&!isDel(id,p)&&ist(sid,p).checked;
         });
-        const gTotal = chkd.reduce((a,id)=>{
-          const sid=rid?rid+':'+id:id; return a+lineTotal(id,sid,p);
-        },0);
+        const gTotal = chkd.reduce((a,id)=>{ const sid=rid?rid+':'+id:id; return a+lineTotal(id,sid,p); },0);
         let statusCls='pending', statusTxt='Pending';
         if (isNan) { statusCls='nan'; statusTxt='No Action'; }
         else if (chkd.length>0) { statusCls='done'; statusTxt=`${chkd.length} item${chkd.length>1?'s':''}`; }
@@ -1930,10 +2032,13 @@ function renderSummary(p) {
     }
     h += `</div>`;
   }
+  return h;
+}
 
-  // Deal Analyzer embedded
+function _sumFinance(p, total) {
   const d = p.deal||{};
-  h += `<div class="sum-section mb-3">
+  const br = p.brrrr||{};
+  return `<div class="sum-section mb-3">
     <div class="sum-sec-hd"><span class="sum-sec-label">Deal Analyzer</span></div>
     <div class="p-4">
       <div class="grid grid-cols-2 gap-3 mb-3">
@@ -1974,91 +2079,8 @@ function renderSummary(p) {
         <p id="da-verdict" class="text-center text-xs text-gray-400 mt-3"></p>
       </div>
     </div>
-  </div>`;
-
-  // Contractor Bids
-  const bids = p.bids||[];
-  const lowestBid = bids.length ? bids.reduce((a,b)=>b.amount<a.amount?b:a) : null;
-  h += `<div class="sum-section mb-3">
-    <div class="sum-sec-hd" style="padding-bottom:10px">
-      <span class="sum-sec-label">Contractor Bids</span>
-      <button onclick="openBidModal()" style="font-size:11px;font-weight:700;padding:5px 12px;
-        border-radius:8px;background:var(--clr-brand);color:#fff;border:none;cursor:pointer;
-        font-family:inherit;display:inline-flex;align-items:center;gap:4px">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Add Bid
-      </button>
-    </div>`;
-  if (!bids.length) {
-    h += `<div class="empty-state" style="margin:8px 14px"><div class="empty-state-icon" aria-hidden="true">💼</div>
-      <div class="empty-state-title">No bids yet</div>
-      <div class="empty-state-body">Add contractor bids to compare against your estimate of ${fmt(total)}.</div>
-    </div>`;
-  } else {
-    // Table header
-    h += `<div style="display:grid;grid-template-columns:1fr auto auto auto;gap:8px;
-      padding:6px 14px;font-size:10px;font-weight:700;color:var(--clr-subtle);letter-spacing:.05em">
-      <span>CONTRACTOR</span><span style="text-align:right">BID</span><span style="text-align:right">VS ESTIMATE</span><span></span>
-    </div>`;
-    bids.sort((a,b)=>a.amount-b.amount).forEach(bid=>{
-      const variance = bid.amount - total;
-      const pct = total > 0 ? (variance/total*100).toFixed(1) : 0;
-      const isLow = bid.id === lowestBid?.id;
-      const varCls = variance <= 0 ? 'under' : 'over';
-      const varStr = (variance>=0?'+':'')+fmt(variance)+` (${pct>0?'+':''}${pct}%)`;
-      h += `<div class="bid-row${isLow?' bid-best':''}">
-        <div class="bid-name">${isLow?'⭐ ':''}<span>${bid.name}</span>
-          ${bid.notes?`<div class="bid-date" style="margin-top:2px">${bid.notes}</div>`:''}
-          <div class="bid-date">${bid.date||''}</div>
-        </div>
-        <div class="bid-amount">${fmt(bid.amount)}</div>
-        <span class="bid-var ${varCls}">${varStr}</span>
-        <button class="bid-del" data-action="del-bid" data-bid-id="${bid.id}" aria-label="Remove bid">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>`;
-    });
-  }
-  h += `</div>`;
-
-  // Actual vs Estimated
-  const secKeys2 = ['general','kitchen','bathroom','bedroom','living','systems','exterior'];
-  const hasActuals = secKeys2.some(sk=>(p.actuals||{})[sk]>0);
-  let totalActual = 0;
-  h += `<div class="sum-section mb-3">
-    <div class="sum-sec-hd"><span class="sum-sec-label">Actual vs Estimated</span></div>
-    <div style="padding:4px 0">
-      <div style="display:grid;grid-template-columns:1fr 90px 90px 60px;gap:6px;
-        padding:6px 14px 8px;font-size:10px;font-weight:700;color:var(--clr-subtle);letter-spacing:.05em">
-        <span>SECTION</span><span style="text-align:right">ESTIMATE</span><span style="text-align:right">ACTUAL</span><span style="text-align:center">VAR</span>
-      </div>`;
-  secKeys2.forEach(sk => {
-    const sec = SECTIONS[sk]; const est = sectionTotal(sk,p);
-    if (est===0 && !(p.actuals||{})[sk]) return;
-    const act = parseFloat((p.actuals||{})[sk])||0;
-    if(act>0) totalActual += act;
-    const variance = act>0 ? act-est : null;
-    const varCls = variance===null?'none':variance<=0?'under':'over';
-    const varTxt = variance===null?'—':(variance>=0?'+':'')+fmt(variance);
-    h += `<div class="actual-row">
-      <span class="actual-label">${sec.label}</span>
-      <span class="actual-est">${est>0?fmt(est):'—'}</span>
-      <input class="actual-input" type="number" step="100" placeholder="—"
-        value="${act||''}" data-action="save-actual" data-sk="${sk}" aria-label="Actual cost for ${sec.label}">
-      <span class="actual-var ${varCls}">${varTxt}</span>
-    </div>`;
-  });
-  const totalVar = totalActual>0 ? totalActual-total : null;
-  h += `<div class="actual-row total-row">
-    <span class="actual-label">TOTAL</span>
-    <span class="actual-est" style="font-weight:800;color:var(--clr-text)">${fmt(total)}</span>
-    <span class="actual-est" style="font-weight:800;color:var(--clr-text)">${totalActual>0?fmt(totalActual):'—'}</span>
-    <span class="actual-var ${totalVar===null?'none':totalVar<=0?'under':'over'}">${totalVar===null?'—':(totalVar>=0?'+':'')+fmt(totalVar)}</span>
-  </div>`;
-  h += `</div></div>`;
-
-  // Deal Summary Card button
-  h += `<div class="sum-section mb-3">
+  </div>
+  <div class="sum-section mb-3">
     <div class="p-4">
       <button onclick="openDealCard()" class="w-full h-12 rounded-xl font-bold text-sm
         flex items-center justify-center gap-2 cursor-pointer transition-colors
@@ -2067,11 +2089,8 @@ function renderSummary(p) {
         View Deal Summary Card
       </button>
     </div>
-  </div>`;
-
-  // BRRRR Calculator
-  const br = p.brrrr||{};
-  h += `<div class="sum-section mb-3">
+  </div>
+  <div class="sum-section mb-3">
     <div class="sum-sec-hd"><span class="sum-sec-label">BRRRR Calculator</span>
       <span class="text-xs text-gray-400 font-normal ml-2">Buy · Rehab · Rent · Refi · Repeat</span>
     </div>
@@ -2121,42 +2140,94 @@ function renderSummary(p) {
       </div>
     </div>
   </div>`;
+}
 
-  // Quick stats row
-  const totalItems = buildRows(p).length;
-  const sectionsWithCost = ['general','kitchen','bathroom','bedroom','living','systems','exterior'].filter(sk=>sectionTotal(sk,p)>0).length;
-  const costPerSqft = p.sqft > 0 ? (calcTotal(p)/p.sqft).toFixed(2) : null;
+function _sumBids(p, total) {
+  const bids = p.bids||[];
+  const lowestBid = bids.length ? bids.reduce((a,b)=>b.amount<a.amount?b:a) : null;
+  let h = `<div class="sum-section mb-3">
+    <div class="sum-sec-hd" style="padding-bottom:10px">
+      <span class="sum-sec-label">Contractor Bids</span>
+      <button onclick="openBidModal()" style="font-size:11px;font-weight:700;padding:5px 12px;
+        border-radius:8px;background:var(--clr-brand);color:#fff;border:none;cursor:pointer;
+        font-family:inherit;display:inline-flex;align-items:center;gap:4px">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Bid
+      </button>
+    </div>`;
+  if (!bids.length) {
+    h += `<div class="empty-state" style="margin:8px 14px">
+      <div class="empty-state-title">No bids yet</div>
+      <div class="empty-state-body">Add contractor bids to compare against your estimate of ${fmt(total)}.</div>
+    </div>`;
+  } else {
+    h += `<div style="display:grid;grid-template-columns:1fr auto auto auto;gap:8px;
+      padding:6px 14px;font-size:10px;font-weight:700;color:var(--clr-subtle);letter-spacing:.05em">
+      <span>CONTRACTOR</span><span style="text-align:right">BID</span><span style="text-align:right">VS ESTIMATE</span><span></span>
+    </div>`;
+    bids.sort((a,b)=>a.amount-b.amount).forEach(bid=>{
+      const variance = bid.amount - total;
+      const pct = total > 0 ? (variance/total*100).toFixed(1) : 0;
+      const isLow = bid.id === lowestBid?.id;
+      const varCls = variance <= 0 ? 'under' : 'over';
+      const varStr = (variance>=0?'+':'')+fmt(variance)+` (${pct>0?'+':''}${pct}%)`;
+      h += `<div class="bid-row${isLow?' bid-best':''}">
+        <div class="bid-name">${isLow?'★ ':''}<span>${bid.name}</span>
+          ${bid.notes?`<div class="bid-date" style="margin-top:2px">${bid.notes}</div>`:''}
+          <div class="bid-date">${bid.date||''}</div>
+        </div>
+        <div class="bid-amount">${fmt(bid.amount)}</div>
+        <span class="bid-var ${varCls}">${varStr}</span>
+        <button class="bid-del" data-action="del-bid" data-bid-id="${bid.id}" aria-label="Remove bid">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>`;
+    });
+  }
+  h += `</div>`;
+  const secKeys2 = ['general','kitchen','bathroom','bedroom','living','systems','exterior'];
+  let totalActual = 0;
   h += `<div class="sum-section mb-3">
-    <div class="sum-sec-hd"><span class="sum-sec-label">Quick Stats</span></div>
-    <div class="grid grid-cols-3 gap-2 px-4 pb-4 pt-1">
-      <div class="bg-orange-50 border border-orange-100 rounded-xl p-3 text-center">
-        <div class="text-2xl font-black text-orange-600">${totalItems}</div>
-        <div class="text-xs font-semibold text-gray-400 mt-0.5">Line Items</div>
-      </div>
-      <div class="bg-blue-50 border border-blue-100 rounded-xl p-3 text-center">
-        <div class="text-2xl font-black text-blue-600">${sectionsWithCost}</div>
-        <div class="text-xs font-semibold text-gray-400 mt-0.5">Sections</div>
-      </div>
-      <div class="bg-green-50 border border-green-100 rounded-xl p-3 text-center">
-        <div class="text-2xl font-black text-green-600">${costPerSqft ? '$'+costPerSqft : '—'}</div>
-        <div class="text-xs font-semibold text-gray-400 mt-0.5">${costPerSqft ? 'Per Sq Ft' : 'No Sq Ft'}</div>
-      </div>
-    </div>
+    <div class="sum-sec-hd"><span class="sum-sec-label">Actual vs Estimated</span></div>
+    <div style="padding:4px 0">
+      <div style="display:grid;grid-template-columns:1fr 90px 90px 60px;gap:6px;
+        padding:6px 14px 8px;font-size:10px;font-weight:700;color:var(--clr-subtle);letter-spacing:.05em">
+        <span>SECTION</span><span style="text-align:right">ESTIMATE</span><span style="text-align:right">ACTUAL</span><span style="text-align:center">VAR</span>
+      </div>`;
+  secKeys2.forEach(sk => {
+    const sec = SECTIONS[sk]; const est = sectionTotal(sk,p);
+    if (est===0 && !(p.actuals||{})[sk]) return;
+    const act = parseFloat((p.actuals||{})[sk])||0;
+    if(act>0) totalActual += act;
+    const variance = act>0 ? act-est : null;
+    const varCls = variance===null?'none':variance<=0?'under':'over';
+    const varTxt = variance===null?'—':(variance>=0?'+':'')+fmt(variance);
+    h += `<div class="actual-row">
+      <span class="actual-label">${sec.label}</span>
+      <span class="actual-est">${est>0?fmt(est):'—'}</span>
+      <input class="actual-input" type="number" step="100" placeholder="—"
+        value="${act||''}" data-action="save-actual" data-sk="${sk}" aria-label="Actual cost for ${sec.label}">
+      <span class="actual-var ${varCls}">${varTxt}</span>
+    </div>`;
+  });
+  const totalVar = totalActual>0 ? totalActual-total : null;
+  h += `<div class="actual-row total-row">
+    <span class="actual-label">TOTAL</span>
+    <span class="actual-est" style="font-weight:800;color:var(--clr-text)">${fmt(total)}</span>
+    <span class="actual-est" style="font-weight:800;color:var(--clr-text)">${totalActual>0?fmt(totalActual):'—'}</span>
+    <span class="actual-var ${totalVar===null?'none':totalVar<=0?'under':'over'}">${totalVar===null?'—':(totalVar>=0?'+':'')+fmt(totalVar)}</span>
   </div>`;
+  h += `</div></div>`;
+  return h;
+}
 
-  // Cost breakdown chart
-  h += `<div class="sum-section mb-3">
+function _sumReports(p) {
+  let h = `<div class="sum-section mb-3">
     <div class="sum-sec-hd"><span class="sum-sec-label">Cost by Section</span></div>
     <div class="px-4 pb-4 pt-2">${renderCostChart(p)}</div>
   </div>`;
-
-  // Timeline Estimator
   h += renderTimelineSection(p);
-
-  // Material Takeoffs
   h += renderMaterialTakeoffs(p);
-
-  // Export
   h += `<div class="sum-section mb-6 no-print">
     <div class="sum-sec-hd"><span class="sum-sec-label">Export & Print</span></div>
     <div class="p-4 space-y-2">
@@ -2179,9 +2250,10 @@ function renderSummary(p) {
         Generate Punch List
       </button>
     </div>
-  </div></div>`;
+  </div>`;
   return h;
 }
+
 
 function bindSummaryEvents(p) {
   const el = document.getElementById('section-content');
@@ -2379,7 +2451,71 @@ function delRoom(secKey, roomId) {
   persist(); render();
 }
 
+// ═══════════════════ SUMMARY SUB-TABS ═══════════════════
+function dashNewProject() {
+  const modal = document.getElementById('new-prop-modal');
+  document.getElementById('np-name').value = '';
+  document.getElementById('np-addr').value = '';
+  modal.style.display = 'flex';
+  setTimeout(()=>document.getElementById('np-name').focus(), 60);
+}
+function closeNewPropModal() {
+  document.getElementById('new-prop-modal').style.display = 'none';
+}
+function confirmNewProject() {
+  const name = document.getElementById('np-name').value.trim();
+  if (!name) { document.getElementById('np-name').style.borderColor='#EF4444'; document.getElementById('np-name').focus(); return; }
+  const addr = document.getElementById('np-addr').value.trim();
+  closeNewPropModal();
+  closeAll();
+  const p = mkProj();
+  p.name = name; p.address = addr;
+  S.projects.push(p); S.curId = p.id;
+  persist(); render();
+  toast('Property created! Start assessing.', 'success');
+}
+function dashDeleteProject(id) {
+  const p = S.projects.find(x=>x.id===id);
+  if (!p) return;
+  const isLast = S.projects.length === 1;
+  const msg = isLast
+    ? `Delete "${p.name||'this property'}"?\n\nThis is your only property — you'll be prompted to create a new one.`
+    : `Delete "${p.name||'this property'}"? This cannot be undone.`;
+  if (!confirm(msg)) return;
+  S.projects = S.projects.filter(x=>x.id!==id);
+  if (S.curId === id) S.curId = S.projects.length ? S.projects[0].id : null;
+  persist();
+  if (isLast) {
+    closeAll();
+    render(); // shows "No Property Selected" empty state
+    setTimeout(() => dashNewProject(), 350);
+  } else {
+    renderProjList();
+    if (S.curId) render();
+    toast('Property deleted', 'info');
+  }
+}
+
+function switchSumTab(tab) {
+  S.sumTab = tab;
+  renderSection();
+}
+
+// ═══════════════════ JSON BACKUP ═══════════════════
+function exportProjectJSON() {
+  const p = proj(); if (!p) return;
+  const data = JSON.stringify(p, null, 2);
+  const blob = new Blob([data], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const safeName = (p.name||'project').replace(/[^a-z0-9]/gi,'_').toLowerCase();
+  a.href = url; a.download = `spark_${safeName}_${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
+  toast('Project backup downloaded!', 'success');
+}
+
 // ═══════════════════ NAVIGATION ═══════════════════
+// ═══════════════════ SUMMARY SUB-TABS ═══════════════════
 function setSection(secKey) {
   S.sec=secKey; S.exp=new Set(); // collapse all groups on section change
   render();
@@ -2418,14 +2554,34 @@ function statusPill(status) {
   return `<span class="status-pill ${s}">${cfg.label}</span>`;
 }
 function renderProjList() {
-  document.getElementById('proj-list').innerHTML = S.projects.map(p=>`
-    <div class="px-3 py-3 rounded-xl cursor-pointer ${p.id===S.curId?'bg-orange-600':'hover:bg-gray-700'}"
-      data-action="switch-proj" data-id="${p.id}">
-      <div class="flex items-center justify-between gap-2">
-        <div class="text-white font-semibold text-sm truncate">${p.name}</div>
-        ${statusPill(p.status)}
+  const el = document.getElementById('proj-list');
+  if (!S.projects.length) {
+    el.innerHTML = `<div style="text-align:center;padding:24px 16px;color:#9CA3AF">
+      <svg style="margin:0 auto 10px;display:block" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <div style="font-size:13px;font-weight:600;color:#D1D5DB;margin-bottom:4px">No properties yet</div>
+      <div style="font-size:11px">Tap "New Project" to create one</div>
+    </div>`;
+    return;
+  }
+  el.innerHTML = S.projects.map(p=>`
+    <div style="position:relative" class="group">
+      <div class="px-3 py-3 rounded-xl cursor-pointer pr-10 ${p.id===S.curId?'bg-orange-600':'hover:bg-gray-700'}"
+        data-action="switch-proj" data-id="${p.id}">
+        <div class="flex items-center justify-between gap-2">
+          <div class="text-white font-semibold text-sm truncate">${p.name}</div>
+          ${statusPill(p.status)}
+        </div>
+        <div class="text-gray-400 text-xs mt-0.5">${p.address||'No address'} · ${fmt(calcTotal(p))}</div>
       </div>
-      <div class="text-gray-400 text-xs mt-0.5">${p.address||'No address'} · ${fmt(calcTotal(p))}</div>
+      <button onclick="dashDeleteProject('${p.id}')" aria-label="Delete property"
+        style="position:absolute;right:6px;top:50%;transform:translateY(-50%);
+          width:28px;height:28px;border-radius:8px;border:none;cursor:pointer;
+          background:rgba(239,68,68,.15);color:#F87171;display:flex;align-items:center;
+          justify-content:center;opacity:0;transition:opacity .15s"
+        onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0'"
+        ontouchstart="this.style.opacity='1'">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+      </button>
     </div>`).join('');
 }
 
@@ -2963,7 +3119,7 @@ function renderCostChart(p) {
   const rows = secs.map(s=>({ label:s.label, val:sectionTotal(s.key,p) })).filter(r=>r.val>0);
   if (!rows.length) return `<div style="text-align:center;padding:20px 0;color:#9CA3AF;font-size:13px">Check off items to see the breakdown.</div>`;
   const max = Math.max(...rows.map(r=>r.val));
-  const COLORS = ['#EA580C','#2563EB','#16A34A','#D97706','#7C3AED','#0891B2','#DC2626'];
+  const COLORS = ['#C84B11','#2563EB','#16A34A','#D97706','#7C3AED','#0891B2','#DC2626'];
   const n = rows.length;
   // Layout: fixed viewBox so bars stay consistent regardless of SVG width
   const VW = 320, CHART_H = 90, PAD_T = 20, PAD_B = 30, PAD_X = 6;
@@ -2998,7 +3154,7 @@ function applyTheme(t) {
   const btn  = document.getElementById('theme-toggle');
   if (t === 'light') {
     if (knob) knob.style.transform = 'translateX(24px)';
-    if (btn) btn.style.background = '#EA580C';
+    if (btn) btn.style.background = '#C84B11';
   } else {
     if (knob) knob.style.transform = 'translateX(0)';
     if (btn) btn.style.background = '';
@@ -3024,7 +3180,7 @@ function printScope() {
   }
   ph.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
     <div>
-      <div style="font-size:18px;font-weight:900;letter-spacing:.06em;color:#EA580C">SPARK REPAIR ESTIMATOR</div>
+      <div style="font-size:18px;font-weight:900;letter-spacing:.06em;color:#C84B11">SPARK REPAIR ESTIMATOR</div>
       <div style="font-size:13px;color:#374151;font-weight:600">${p.name||'Untitled Project'}</div>
       ${p.address?`<div style="font-size:12px;color:#6B7280">${p.address}</div>`:''}
     </div>
@@ -3443,7 +3599,7 @@ function checkItemPlacement(name) {
       <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap">
         <button onclick="switchAndAdd('${bestMatch.sec}')"
           style="font-size:11px;font-weight:700;padding:5px 12px;border-radius:8px;
-          background:#EA580C;color:#fff;border:none;cursor:pointer;font-family:inherit;
+          background:#C84B11;color:#fff;border:none;cursor:pointer;font-family:inherit;
           display:inline-flex;align-items:center;gap:4px">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           Switch to ${bestMatch.label}
@@ -3723,8 +3879,8 @@ function openPunchList() {
     html += `</div>`;
   });
   html += `<div style="text-align:center;padding:12px 0;color:#6B7280;font-size:12px">
-    ${totalItems} items · Total Estimate: <strong style="color:#EA580C">${fmt(calcTotal(p))}</strong>
-    ${p.contingency ? ` · ${p.contingency}% contingency: <strong style="color:#EA580C">${fmt(calcTotal(p)*(1+p.contingency/100))}</strong>` : ''}
+    ${totalItems} items · Total Estimate: <strong style="color:#C84B11">${fmt(calcTotal(p))}</strong>
+    ${p.contingency ? ` · ${p.contingency}% contingency: <strong style="color:#C84B11">${fmt(calcTotal(p)*(1+p.contingency/100))}</strong>` : ''}
   </div>`;
   body.innerHTML = html;
   document.getElementById('punch-list-modal').classList.add('open');
@@ -3866,13 +4022,14 @@ setSection('general');
 
 // ── Wire up static buttons ──
 document.getElementById('menu-btn').onclick=()=>openDrawer('proj');
+document.getElementById('close-proj-btn').onclick=()=>openDrawer('proj');
+document.getElementById('home-btn').onclick=()=>openDrawer('proj');
 document.getElementById('gear-btn').onclick=()=>openDrawer('set');
 document.getElementById('overlay').onclick=closeAll;
 document.getElementById('proj-close').onclick=closeAll;
 document.getElementById('set-close').onclick=closeAll;
-document.getElementById('new-proj-btn').onclick=()=>{
-  const p=mkProj(); S.projects.push(p); S.curId=p.id; persist(); closeAll(); render();
-};
+document.getElementById('new-proj-btn').onclick=()=>{ closeAll(); dashNewProject(); };
+document.getElementById('export-json-btn').addEventListener('click', exportProjectJSON);
 document.getElementById('del-proj-btn').onclick=()=>{
   if(S.projects.length<=1){toast('Cannot delete your only project.','warning');return;}
   if(!confirm('Delete this project?')) return;
@@ -3894,7 +4051,19 @@ document.getElementById('prev-btn').onclick=()=>{
   const idx=SEC_ORDER.indexOf(S.sec); if(idx>0) setSection(SEC_ORDER[idx-1]);
 };
 document.getElementById('next-btn').onclick=()=>{
-  const idx=SEC_ORDER.indexOf(S.sec); if(idx<SEC_ORDER.length-1) setSection(SEC_ORDER[idx+1]);
+  const idx=SEC_ORDER.indexOf(S.sec);
+  if(idx<SEC_ORDER.length-1) {
+    setSection(SEC_ORDER[idx+1]);
+  } else {
+    // "Done" — end of workflow: nudge if low completion, then go home
+    const p=proj();
+    if(p){
+      const {done,total:pt}=calcProgress(p);
+      const pct=pt?Math.round(done/pt*100):0;
+      if(pct<50) toast(`${pct}% assessed — you can always come back to finish.`,'info');
+    }
+    openDrawer('proj');
+  }
 };
 document.getElementById('price-modal-bd').onclick=closePriceModal;
 document.getElementById('pm-reset').onclick=resetPrice;
@@ -3939,5 +4108,39 @@ if('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').catch(e=>console.warn('SW:',e)));
 }
 </script>
+
+<!-- New Project Modal -->
+<div id="new-prop-modal" style="display:none;position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:20px;padding:24px;width:100%;max-width:400px;
+    box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="font-size:17px;font-weight:900;color:#111;margin-bottom:4px">New Property</div>
+    <div style="font-size:13px;color:#6B7280;margin-bottom:18px">Enter details to get started</div>
+    <label style="font-size:11px;font-weight:700;color:#6B7280;letter-spacing:.06em;display:block;margin-bottom:4px">PROPERTY NAME *</label>
+    <input id="np-name" type="text" placeholder="e.g. 123 Main St Rehab"
+      style="width:100%;padding:11px 14px;border:2px solid #E5E7EB;border-radius:12px;
+        font-size:15px;font-weight:600;margin-bottom:12px;outline:none;box-sizing:border-box;font-family:inherit"
+      onfocus="this.style.borderColor='#C84B11'" onblur="this.style.borderColor='#E5E7EB'"
+      onkeydown="if(event.key==='Enter')document.getElementById('np-addr').focus()">
+    <label style="font-size:11px;font-weight:700;color:#6B7280;letter-spacing:.06em;display:block;margin-bottom:4px">ADDRESS (optional)</label>
+    <input id="np-addr" type="text" placeholder="e.g. 123 Main St, Detroit MI"
+      style="width:100%;padding:11px 14px;border:2px solid #E5E7EB;border-radius:12px;
+        font-size:15px;margin-bottom:20px;outline:none;box-sizing:border-box;font-family:inherit"
+      onfocus="this.style.borderColor='#C84B11'" onblur="this.style.borderColor='#E5E7EB'"
+      onkeydown="if(event.key==='Enter')confirmNewProject()">
+    <div style="display:flex;gap:10px">
+      <button onclick="closeNewPropModal()"
+        style="flex:1;padding:12px;border:2px solid #E5E7EB;border-radius:12px;
+          background:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;color:#6B7280">
+        Cancel
+      </button>
+      <button onclick="confirmNewProject()"
+        style="flex:2;padding:12px;border:none;border-radius:12px;
+          background:#C84B11;color:#fff;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit">
+        Create Property
+      </button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
