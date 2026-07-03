@@ -1670,9 +1670,15 @@ function renderRooms(sec, secKey, p) {
   const hint = SEC_HINTS[secKey];
   if (hint) h += `<div class="sec-hint">${hint}</div>`;
   const rooms = p.rooms[sec.roomKey]||[];
-  const ROOM_ICONS = {kitchen:'🍳',bathroom:'🚿',bedroom:'🛏️',living:'🛋️'};
+  const ROOM_ICONS = {
+    kitchen: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 10h4v4H6z"/><path d="M14 10h4"/><path d="M14 14h4"/></svg>`,
+    bathroom: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 6 C9 4.3 10.3 3 12 3 C13.7 3 15 4.3 15 6 L15 11"/><path d="M2 11 L22 11 L22 13 C22 17.4 18.4 21 14 21 L10 21 C5.6 21 2 17.4 2 13 Z"/><line x1="5" y1="21" x2="5" y2="23"/><line x1="19" y1="21" x2="19" y2="23"/></svg>`,
+    bedroom:  `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>`,
+    living:   `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20 9V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v2"/><path d="M2 11v5a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v2H6v-2a2 2 0 0 0-4 0z"/><line x1="4" y1="18" x2="4" y2="22"/><line x1="20" y1="18" x2="20" y2="22"/></svg>`,
+  };
+  const ROOM_ICON_DEFAULT = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`;
   if (rooms.length === 0) {
-    const icon = ROOM_ICONS[sec.roomKey] || '🏠';
+    const icon = ROOM_ICONS[sec.roomKey] || ROOM_ICON_DEFAULT;
     h += `<div class="empty-state">
       <div class="empty-state-icon">${icon}</div>
       <div class="empty-state-title">No ${sec.defName}s added yet</div>
@@ -2763,7 +2769,7 @@ function calcDeal() {
   const arv=parseFloat(document.getElementById('da-arv')?.value)||0;
   const mo=parseFloat(document.getElementById('da-mo')?.value)||6;
   const repair=calcTotal(p);
-  p.deal={pp,arv,mo}; persist();
+  if(document.getElementById('da-pp')) { p.deal={pp,arv,mo}; persist(); }
   const repEl=document.getElementById('da-repair');
   if(repEl) repEl.textContent=fmt(repair);
   if(!pp||!arv){
@@ -3078,7 +3084,7 @@ function calcBRRRR() {
   const arv    = parseFloat(document.getElementById('da-arv')?.value) || 0;
   const pp     = parseFloat(document.getElementById('da-pp')?.value) || 0;
   const repair = calcTotal(p);
-  p.brrrr = { rent, ltv, rate, vac: vacPct }; persist();
+  if(document.getElementById('br-rent')) { p.brrrr = { rent, ltv, rate, vac: vacPct }; persist(); }
   const refiProceeds = arv * (ltv/100);
   const totalCashIn  = pp + repair;
   const cashLeft     = Math.max(0, totalCashIn - refiProceeds);
@@ -4019,6 +4025,8 @@ function updateOnlineStatus() {
 (()=>{ const t=localStorage.getItem('spark_theme')||'dark'; applyTheme(t); })();
 load();
 setSection('general');
+// First-run: no projects → open create modal after a short paint delay
+if (!S.projects.length) setTimeout(() => dashNewProject(), 200);
 
 // ── Wire up static buttons ──
 document.getElementById('menu-btn').onclick=()=>openDrawer('proj');
@@ -4030,12 +4038,7 @@ document.getElementById('proj-close').onclick=closeAll;
 document.getElementById('set-close').onclick=closeAll;
 document.getElementById('new-proj-btn').onclick=()=>{ closeAll(); dashNewProject(); };
 document.getElementById('export-json-btn').addEventListener('click', exportProjectJSON);
-document.getElementById('del-proj-btn').onclick=()=>{
-  if(S.projects.length<=1){toast('Cannot delete your only project.','warning');return;}
-  if(!confirm('Delete this project?')) return;
-  S.projects=S.projects.filter(p=>p.id!==S.curId);
-  S.curId=S.projects[0].id; persist(); closeAll(); render();
-};
+document.getElementById('del-proj-btn').onclick=()=>{ if(S.curId) dashDeleteProject(S.curId); };
 document.getElementById('proj-list').onclick=e=>{
   const t=e.target.closest('[data-action="switch-proj"]');
   if(t){S.curId=t.dataset.id;persist();closeAll();render();}

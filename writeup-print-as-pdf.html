@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spark Repair Estimator — Submission Writeup</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #f5f5f5;
+    color: #111;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0.5in auto;
+    padding: 0.65in 0.75in;
+    background: #fff;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  }
+
+  /* HEADER */
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 2.5px solid #C84B11;
+    padding-bottom: 14px;
+    margin-bottom: 20px;
+  }
+  .header-left h1 {
+    font-size: 18pt;
+    font-weight: 700;
+    color: #C84B11;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+  .header-left .sub {
+    font-size: 9.5pt;
+    color: #555;
+    margin-top: 3px;
+  }
+  .header-right {
+    text-align: right;
+    font-size: 9pt;
+    color: #666;
+    line-height: 1.7;
+  }
+  .header-right .name {
+    font-weight: 600;
+    color: #111;
+    font-size: 10pt;
+  }
+
+  /* GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .grid.three { grid-template-columns: 1fr 1fr 1fr; }
+  .full { grid-column: 1 / -1; }
+
+  /* CARDS */
+  .card {
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 14px 16px;
+    position: relative;
+  }
+  .card.accent {
+    border-color: #C84B11;
+    background: #fff8f5;
+  }
+  .card-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    background: #C84B11;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 9pt;
+    font-weight: 700;
+    margin-bottom: 7px;
+  }
+  .card h2 {
+    font-size: 9.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #C84B11;
+    margin-bottom: 8px;
+  }
+  .card p {
+    font-size: 9.5pt;
+    color: #333;
+    line-height: 1.55;
+  }
+  .card p + p { margin-top: 6px; }
+
+  /* CALLOUT */
+  .callout {
+    background: #111827;
+    color: #fff;
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .callout-icon {
+    font-size: 18pt;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .callout-text h3 {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: #C84B11;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .callout-text p {
+    font-size: 9pt;
+    color: #d1d5db;
+    line-height: 1.5;
+  }
+
+  /* TAGS */
+  .tag {
+    display: inline-block;
+    background: #fef3ee;
+    color: #C84B11;
+    border: 1px solid #fcd5c0;
+    border-radius: 4px;
+    font-size: 8pt;
+    font-weight: 600;
+    padding: 2px 7px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+  .tag.dark {
+    background: #111827;
+    color: #f3f4f6;
+    border-color: #374151;
+  }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 1px solid #e5e5e5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 8.5pt;
+    color: #888;
+  }
+  .footer strong { color: #C84B11; }
+
+  /* PRINT */
+  @media print {
+    body { background: #fff; font-size: 10pt; }
+    .page { margin: 0; box-shadow: none; padding: 0.55in 0.65in; width: 100%; min-height: auto; }
+    @page { margin: 0; size: letter; }
+  }
+
+  /* PRINT BUTTON */
+  .print-bar {
+    text-align: center;
+    padding: 12px;
+    background: #111827;
+    color: #fff;
+    font-size: 10pt;
+  }
+  .print-bar button {
+    background: #C84B11;
+    color: #fff;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 6px;
+    font-size: 10pt;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 12px;
+  }
+  @media print { .print-bar { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="print-bar">
+  Open this file in Chrome or Edge, then:
+  <button onclick="window.print()">Print / Save as PDF</button>
+  &nbsp;→ Choose "Save as PDF" as the destination
+</div>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <h1>Spark Repair Estimator</h1>
+      <div class="sub">Spark Homes Developer Challenge — Submission Writeup</div>
+    </div>
+    <div class="header-right">
+      <div class="name">Charith</div>
+      <div>charith552@sasi.ac.in</div>
+      <div>July 3, 2026</div>
+      <div>Deadline: July 14, 2026</div>
+    </div>
+  </div>
+
+  <!-- GRID 1: UX Decision + Broken/Fragile -->
+  <div class="grid">
+
+    <div class="card accent">
+      <div class="card-num">1</div>
+      <h2>Most Interesting UX Decision</h2>
+      <p><strong>Progressive disclosure with "No Action Needed."</strong> Instead of forcing agents to fill every field before advancing, each repair group has a toggle: check it off or mark it "No Action Needed." Both count as 100% complete for that group.</p>
+      <p>This mirrors how a real walkthrough works — you often know a room is fine in 10 seconds. Forcing field entry would cause agents to skip the app entirely. The progress bar only reaches 100% if the agent has consciously touched every group, which builds confidence in the completeness of the estimate.</p>
+      <p>The second big call: a single scrollable page per section (not step-by-step screens). On mobile, agents can scan and tap fast without feeling like they're navigating a wizard.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-num">2</div>
+      <h2>What Is Broken or Fragile</h2>
+      <p><strong>Photo storage in localStorage.</strong> Images are base64-encoded and stored inline with project data. One project with 20 photos can exceed the 5 MB quota on older Android devices. The app handles this gracefully (strips photos, retries), but the user loses their photos silently.</p>
+      <p><strong>Tesseract.js OCR</strong> loads a large WASM binary (~10 MB) on first use. On slow connections this feels broken. A loading spinner exists, but the experience is rough.</p>
+      <p><strong>calcDeal / calcBRRRR</strong> previously wrote zero values back to the project whenever the Finance sub-tab wasn't active. This was patched (DOM presence guard), but the pattern is fragile — any future DOM restructure could re-introduce the bug.</p>
+      <p><strong>Offline photo capture</strong> relies on the service worker caching the Tesseract WASM — this fails on first offline use if the user never ran OCR while online.</p>
+    </div>
+
+  </div>
+
+  <!-- GRID 2: Creative Addition + Next 2 Days -->
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-num">3</div>
+      <h2>Creative Addition — Deal Intelligence Layer</h2>
+      <p>The brief asked for a repair estimator. I extended it into a <strong>deal decision tool.</strong></p>
+      <p><strong>Deal Analyzer:</strong> Enter purchase price and ARV. Get projected profit, ROI, max offer (70% rule), holding cost estimate, and a plain-English deal score (Strong / Marginal / Risky).</p>
+      <p><strong>BRRRR Calculator:</strong> Models the full refinance cycle — refi proceeds, cash left in, monthly cash flow, cash-on-cash return. Helps agents decide whether to flip or hold.</p>
+      <p><strong>Risk Score:</strong> 1–5 score auto-computed from checked items — structural flags, missing systems assessments, deferred items. Surfaces properties that look cheap but carry hidden risk.</p>
+      <p><em>Why:</em> Acquisition agents don't just need repair costs — they need to know if the deal works. Combining both in one walkthrough tool eliminates the spreadsheet-switching that kills field momentum.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-num">4</div>
+      <h2>What I'd Ship Next (2 More Days)</h2>
+      <p><strong>Day 1 — Contractor Bid Flow:</strong> The bid tracker exists but bid-vs-estimate variance comparison isn't surfaced as an alert. I'd add a "bids received" status to each section, auto-flag when the lowest bid exceeds the estimate by &gt;20%, and make the Bids sub-tab the default after export so agents remember to update it.</p>
+      <p><strong>Day 1 — Photo-to-IndexedDB migration:</strong> Move all photo storage from localStorage to IndexedDB. This eliminates the quota issue, unlocks unlimited photos, and makes the app genuinely production-ready for large properties.</p>
+      <p><strong>Day 2 — Share link via URL:</strong> Encode the current project as a compressed base64 URL fragment. Agents could share a read-only estimate with a lender or partner by texting a link — no login, no server required.</p>
+      <p><strong>Day 2 — Timeline → Calendar export:</strong> The timeline estimator generates week-by-week schedules. I'd add .ics export so agents can drop renovation milestones directly into Google Calendar.</p>
+    </div>
+
+  </div>
+
+  <!-- CALLOUT: AI Role -->
+  <div class="callout">
+    <div class="callout-icon">⚡</div>
+    <div class="callout-text">
+      <h3>Role of AI in Development</h3>
+      <p>Claude (Anthropic) was used as the primary development partner throughout — architecture decisions, implementation, edge case analysis, and UX review. The most valuable use was iterative debugging: I'd describe a bug (e.g., "calcDeal writes zeroes when Finance tab isn't active") and Claude would diagnose the root cause and produce a targeted patch. AI dramatically compressed the feedback loop between "I noticed something broken" and "it's fixed." The code is mine in the sense that I directed every decision and reviewed every change — but I wouldn't have shipped this level of polish in this time frame without it.</p>
+    </div>
+  </div>
+
+  <!-- TAGS ROW -->
+  <div style="margin-top: 14px; margin-bottom: 4px;">
+    <span class="tag dark">Vanilla JS</span>
+    <span class="tag dark">Tailwind CDN</span>
+    <span class="tag dark">SheetJS / xlsx</span>
+    <span class="tag dark">JSZip</span>
+    <span class="tag dark">Tesseract.js OCR</span>
+    <span class="tag dark">Web Speech API</span>
+    <span class="tag dark">Service Worker</span>
+    <span class="tag dark">PWA / Installable</span>
+    <span class="tag">Mobile-first</span>
+    <span class="tag">Single HTML file</span>
+    <span class="tag">Offline-capable</span>
+    <span class="tag">No build step</span>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>github.com/[your-username]/spark-repair-estimator &nbsp;·&nbsp; Live: [your-username].github.io/spark-repair-estimator</div>
+    <div><strong>Spark Homes Developer Challenge</strong> &nbsp;·&nbsp; $1,000 Prize</div>
+  </div>
+
+</div>
+
+</body>
+</html>
